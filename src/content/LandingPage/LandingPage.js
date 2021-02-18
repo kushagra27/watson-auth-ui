@@ -7,6 +7,8 @@ import {
     Modal
   } from 'carbon-components-react';
 import './_landing-page.scss'
+import axios from 'axios';
+
 class LandingPage  extends React.Component{
     constructor(){
         super()
@@ -23,14 +25,38 @@ class LandingPage  extends React.Component{
         const {name, value} = e.target
         this.setState({
             [name]: value
-        },()=>{
-            console.log(name, value)
         })
     }
 
-    handleSubmit = (e)=>{
-        console.log(e)
-        console.log("pressed")
+    handleSubmit = ()=>{
+        // if(this.state.name === "" || this.state.phone === "" || this.state.address === ""){
+        //     alert("Enter Valid Details")
+        //     return
+        // }
+        const random = Math.floor(Math.random() * 10)
+        const start = random < this.state.phone.length - 3 ? random : random - 3
+        const policy = this.state.name.substring(0,3).toUpperCase() + this.state.phone.substring(start,start + 3) + (new Date()).getTime() % 100000
+        const date = new Date()
+        const premiumDate = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
+        this.setState({policy, premiumDate})
+        console.log(policy, premiumDate)
+
+        const data = {
+            "name" : this.state.name,
+            "phone_no": this.state.phone,
+            "policy_no": policy,
+            "premium_date": premiumDate,
+            "premium_amount":500,
+            "address": this.state.address
+        }
+
+        axios.post('http://159.122.187.93:32000/api/v1.0/registeruser', data)
+        .then((res)=>{
+            console.log(res)
+        }).catch(err=>{
+            console.log(err)
+        })
+
     }
 
     render(){
@@ -38,7 +64,7 @@ class LandingPage  extends React.Component{
         return (
             <div className="bx--grid bx--grid--full-width landing-page" style={{padding:"0", justifyContent:"center", alignItems:"center"}}>
                 <div className="bx--row landing-page__banner" style={{padding:"2rem", justifyContent:"center", alignItems:"center", height:"20rem"}}>
-                    <div className="bx--col-lg-16">
+                    <div className="bx--col-lg-14 bx--offset-lg-2">
                         <h1 className="landing-page__heading" >
                             Welcome to Sample Insurance Company
                         </h1><br />
@@ -46,6 +72,8 @@ class LandingPage  extends React.Component{
                             Welcome to our website, press the button below to register
                         </p><br />
                         <ModalWrapper
+                            open={true}
+                            shouldCloseAfterSubmit={true}
                             buttonTriggerText="Register"
                             modalHeading="New User"
                             modalLabel="Register"
@@ -66,20 +94,10 @@ class LandingPage  extends React.Component{
                                         id="phone"
                                         invalidText="A valid value is required"
                                         labelText="Phone"
-                                        placeholder="+919876543210"
+                                        placeholder="9876543210"
                                         name="phone"
                                         onChange={this.handleChange}
                                         value={this.state.phone}
-                                    /><br />
-    
-                                    <TextInput
-                                        id="policy"
-                                        invalidText="A valid value is required"
-                                        labelText="Policy No."
-                                        placeholder="xxx123"
-                                        name="policy"
-                                        onChange={this.handleChange}
-                                        value={this.state.policy}
                                     /><br />
     
                                     <TextInput
@@ -90,8 +108,7 @@ class LandingPage  extends React.Component{
                                         name="address"
                                         onChange={this.handleChange}
                                         value={this.state.address}
-                                    /><br />
-    
+                                    />
                                 </Form>
                         </ModalWrapper>
 
