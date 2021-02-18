@@ -11,12 +11,25 @@ class LandingPage  extends React.Component{
     constructor(){
         super()
         this.state = {
-
+            name:"",
+            phone:"",
+            policy:"",
+            address:"",
         }
 
     }
 
-    handleSubmit = ()=>{
+    handleChange = (e) =>{
+        const {name, value} = e.target
+        this.setState({
+            [name]: value
+        },()=>{
+            console.log(name, value)
+        })
+    }
+
+    handleSubmit = (e)=>{
+        console.log(e)
         console.log("pressed")
     }
 
@@ -44,6 +57,9 @@ class LandingPage  extends React.Component{
                                         invalidText="A valid value is required"
                                         labelText="Name"
                                         placeholder="John Doe"
+                                        name="name"
+                                        onChange={this.handleChange}
+                                        value={this.state.name}
                                     /><br />
     
                                     <TextInput
@@ -51,6 +67,9 @@ class LandingPage  extends React.Component{
                                         invalidText="A valid value is required"
                                         labelText="Phone"
                                         placeholder="+919876543210"
+                                        name="phone"
+                                        onChange={this.handleChange}
+                                        value={this.state.phone}
                                     /><br />
     
                                     <TextInput
@@ -58,6 +77,9 @@ class LandingPage  extends React.Component{
                                         invalidText="A valid value is required"
                                         labelText="Policy No."
                                         placeholder="xxx123"
+                                        name="policy"
+                                        onChange={this.handleChange}
+                                        value={this.state.policy}
                                     /><br />
     
                                     <TextInput
@@ -65,6 +87,9 @@ class LandingPage  extends React.Component{
                                         invalidText="A valid value is required"
                                         labelText="Address"
                                         placeholder="Random Address"
+                                        name="address"
+                                        onChange={this.handleChange}
+                                        value={this.state.address}
                                     /><br />
     
                                 </Form>
