@@ -37,7 +37,8 @@ class LandingPage  extends React.Component{
         const start = random < this.state.phone.length - 3 ? random : random - 3
         const policy = this.state.name.substring(0,3).toUpperCase() + this.state.phone.substring(start,start + 3) + (new Date()).getTime() % 100000
         const date = new Date()
-        const premiumDate = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
+        const curDate = new Date(date.setMonth(date.getMonth()+3));
+        const premiumDate = curDate.getDate()+'/'+(curDate.getMonth()+1)+'/'+date.getFullYear()
         this.setState({policy, premiumDate})
         console.log(policy, premiumDate)
 
@@ -54,9 +55,8 @@ class LandingPage  extends React.Component{
         .then((res)=>{
             console.log(res)
         }).catch(err=>{
-            console.log(err)
+            console.log('error', err)
         })
-
     }
 
     render(){
@@ -94,7 +94,7 @@ class LandingPage  extends React.Component{
                                         id="phone"
                                         invalidText="A valid value is required"
                                         labelText="Phone"
-                                        placeholder="9876543210"
+                                        placeholder="919876543210"
                                         name="phone"
                                         onChange={this.handleChange}
                                         value={this.state.phone}

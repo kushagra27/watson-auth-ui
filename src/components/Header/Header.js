@@ -13,6 +13,7 @@ import {
   SideNavItems,
   HeaderSideNavItems,
 } from 'carbon-components-react';
+import { Link } from 'react-router-dom';
 
 const HeaderC = () => (
   <HeaderContainer
@@ -35,8 +36,11 @@ const HeaderC = () => (
           </SideNavItems>
         </SideNav>
         <HeaderGlobalBar >
-            <HeaderNavigation aria-label="Carbon Tutorial">
-            <HeaderMenuItem >Login</HeaderMenuItem>
+            <HeaderNavigation aria-label="Carbon Tutorial" style={{padding:"0"}}>
+              <HeaderMenuItem element={Link} to="/">Login</HeaderMenuItem>
+            </HeaderNavigation>
+            <HeaderNavigation aria-label="Carbon Tutorial" style={{padding:"0"}}>
+              <HeaderMenuItem element={Link} to="/display">View</HeaderMenuItem>
             </HeaderNavigation>
         </HeaderGlobalBar>
       </Header>
